@@ -1,6 +1,6 @@
 let timeSecond = 0
 let timeMinute = 0
-let timeHour = 0
+let timeHour = 9
 let intervalid = ''
 let isStart = false
 let timeMs = 0
