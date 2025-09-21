@@ -1,46 +1,65 @@
-let timeSecond = 0
-let timeMinute = 0
-let timeHour = 0
+
+
+let time = JSON.parse(localStorage.getItem('time')) || {
+
+    timeSecond: 0,
+    timeMinute: 0,
+    timeHour:0, 
+    timeMs: 0
+
+}
+
+s()
+save()
 let intervalid = ''
 let isStart = false
-let timeMs = 0
 
+if (localStorage.getItem('ss') === 'true') {
+    document.querySelector('.miliSecond').classList.add('opacity1')
+}
 
 const startButton = document.querySelector('.startButton')
 const resetButton = document.querySelector('.resetButton')
 
 startButton.addEventListener('click', () => {
     start()
+    document.querySelector('.miliSecond').classList.add('opacity1')
+    localStorage.setItem('ss', 'true')
 })
 
 resetButton.addEventListener('click', () => {
     reset()
+     document.querySelector('.miliSecond').classList.remove('opacity1')
+    localStorage.setItem('ss', 'false')
 })
 
 function reset() {
-    timeSecond = 0 
-    timeMinute = 0
-    timeHour = 0
-    timeMs = 0
+    time.timeSecond = 0 
+    time.timeMinute = 0
+    time.timeHour = 0
+    time.timeMs = 0
    s()
-   document.querySelector('.miliSecond').classList.remove('opacity1')
+   
+  
+   localStorage.removeItem('time')
 }
  
+
 
 function start() {
    
 
     if (!isStart) {
         intervalid = setInterval(() => {
-        timeMs += 10
-       document.querySelector('.miliSecond').innerText = timeMs
-
-        if (timeMs === 1000) {
+        time.timeMs += 10
+       document.querySelector('.miliSecond').innerText = time.timeMs
+            save()
+        if (time.timeMs === 1000) {
             addSecond()
 
-        } else if (timeSecond === 59) {
+        } else if (time.timeSecond === 59) {
             addMinute()
-        } else if (timeMinute === 60 ) {
+        } else if (time.timeMinute === 60) {
             addHour()
         } 
         
@@ -49,8 +68,10 @@ function start() {
         isStart = true
          startButton.innerText = 'Stop'
          resetButton.disabled = true
-         document.querySelector('.miliSecond').classList.add('opacity1')
          resetButton.classList.add('disable')
+
+         
+         
          
 
     } else {
@@ -59,36 +80,41 @@ function start() {
         startButton.innerText = 'Start'
         resetButton.disabled = false
         resetButton.classList.remove('disable')
-    };
-
-    
-
-    
         
+    };
+       
 }
 
 
 function s() {
     
-        document.querySelector('.second').innerText = display(timeSecond)
-        document.querySelector('.minute').innerText = display(timeMinute)
-        document.querySelector('.hour').innerText = display(timeHour)
-        document.querySelector('.miliSecond').innerText = timeMs
+        document.querySelector('.second').innerText = display(time.timeSecond)
+        document.querySelector('.minute').innerText = display(time.timeMinute)
+        document.querySelector('.hour').innerText = display(time.timeHour)
+        document.querySelector('.miliSecond').innerText = time.timeMs
+        
        
 }
 
 function addMinute() {
-        timeSecond = -1
-        timeMinute +=1
+        time.timeSecond = -1
+        time.timeMinute +=1
+        
             setTimeout(()=>{
-            document.querySelector('.minute').innerText = display(timeMinute)  
+            document.querySelector('.minute').innerText = display(time.timeMinute)  
             },1000)
+            
 }
 
 function addHour() {
-     timeMinute = 0
-        timeHour +=1
-            document.querySelector('.hour').innerText = display(timeHour)  
+     time.timeMinute = 0
+        time.timeHour +=1
+        setTimeout(()=>{
+            document.querySelector('.hour').innerText = display(time.timeHour)
+        },1000)
+        
+        
+              
             
 }
     
@@ -100,15 +126,25 @@ function display(p) {
 }  return p
 }
 
-function addSecond() {
-    timeMs = 0
-    timeSecond += 1
-    document.querySelector('.second').innerText = display(timeSecond)  
-}
 
+function addSecond() {
+    time.timeMs = 0
+    time.timeSecond++
+     document.querySelector('.second').innerText = display(time.timeSecond) 
+      
+     
+     
+
+};
 
 
 function save() {
-   sto 
+    localStorage.setItem('time', JSON.stringify(time))
 }
+
+
+
+
+
+
 

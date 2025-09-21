@@ -35,6 +35,7 @@ body {
     padding: 5px;
     background-color: blueviolet;
     border-radius: 10px;
+    cursor: pointer;
    
 }
 
@@ -43,6 +44,9 @@ body {
     transform: translate(7.2rem, -0.1rem );
     margin: 0;
     opacity: 0;
+    transition: opacity 1s ease;
+    
+    
     
     
     

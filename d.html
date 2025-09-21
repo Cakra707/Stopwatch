@@ -1,18 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <title>Opacity LocalStorage</title>
+  <style>
+    #teks {
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    #teks.show {
+      opacity: 1;
+    }
+  </style>
 </head>
 <body>
-    <button class="e" onclick="setInterval(() => {
-        console.log(9)
-    },1000)">tyy</button>
+  <button id="tombolShow">Tampilkan</button>
+  <button id="tombolHide">Sembunyikan</button>
 
-<script>
+  <p id="teks">Halo, ini teks yang disimpan statusnya di localStorage!</p>
 
-    
-</script>
+  <script>
+    const teks = document.getElementById("teks");
+    const tombolShow = document.getElementById("tombolShow");
+    const tombolHide = document.getElementById("tombolHide");
+
+    // Saat halaman dibuka, cek status di localStorage
+    if (localStorage.getItem("teksVisible") === "true") {
+      teks.classList.add("show");
+    }
+
+    // tombol tampilkan
+    tombolShow.addEventListener("click", () => {
+      teks.classList.add("show");
+      localStorage.setItem("teksVisible", "true");
+    });
+
+    // tombol sembunyikan
+    tombolHide.addEventListener("click", () => {
+      teks.classList.remove("show");
+      localStorage.setItem("teksVisible", "false");
+    });
+  </script>
 </body>
 </html>
