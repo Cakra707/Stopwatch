@@ -80,6 +80,7 @@ function start() {
         startButton.innerText = 'Start'
         resetButton.disabled = false
         resetButton.classList.remove('disable')
+       
         
     };
        
